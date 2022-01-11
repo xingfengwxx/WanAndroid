@@ -35,15 +35,15 @@ android {
 }
 
 dependencies {
-    implementation cfg.androidx["core-ktx"]
-    implementation cfg.androidx["lifecycle-livedata-ktx"]
+    api cfg.androidx["core-ktx"]
+    api cfg.androidx["lifecycle-livedata-ktx"]
 
     //为了不引入Context，先用LiveDataBus发送toast
-    implementation cfg.library["livedatabus"]
+    api cfg.library["livedatabus"]
 
-    implementation cfg.library["gson"]
-    implementation cfg.library["okhttp3"]
-    implementation cfg.library["retrofit"]
-    implementation cfg.library["converter-gson"]
-    implementation cfg.library["logging-interceptor"]
+    api cfg.library["gson"]
+    api cfg.library["okhttp3"]
+    api cfg.library["retrofit"]
+    api cfg.library["converter-gson"]
+    api cfg.library["logging-interceptor"]
 }

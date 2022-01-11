@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_package = "com.wangxingxing.wanandroid.proto";
+option java_multiple_files = true;
+
+message User {
+  bool admin = 1;
+  repeated string chapterTops = 2;
+  int32 coinCount = 3;
+  repeated int32 collectIds = 4;
+  string email = 5;
+  string icon = 6;
+  int32 id = 7;
+  string nickname = 8;
+  string password = 9;
+  string publicName = 10;
+  string token = 11;
+  int32 type = 12;
+  string username = 13;
+}

@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.launcher.ARouter
+import com.wangxingxing.wanandroid.Constants
 import com.wangxingxing.wanandroid.R
 import com.wangxingxing.wanandroid.databinding.FragmentNotificationsBinding
 
@@ -35,7 +37,16 @@ class NotificationsFragment : Fragment() {
         notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+        initView()
+
         return root
+    }
+
+    private fun initView() {
+        binding.textNotifications.setOnClickListener {
+            ARouter.getInstance().build(Constants.PATH_LOGIN)
+        }
     }
 
     override fun onDestroyView() {

@@ -19,6 +19,7 @@ ext {
             lifecycle   : "2.2.0",
             navigation  : "2.3.5",
             retrofit2   : "2.9.0",
+            arouter     : "1.5.2",
     ]
 
     androidx = [
@@ -37,21 +38,33 @@ ext {
 
             "junit"                     : "junit:junit:4.+",
             "ext-junit"                 : "androidx.test.ext:junit:1.1.2",
-            "espresso-core"             : "androidx.test.espresso:espresso-core:3.3.0"
+            "espresso-core"             : "androidx.test.espresso:espresso-core:3.3.0",
+
+            "datastore"                 : "androidx.datastore:datastore:1.0.0",
 
     ]
 
     library = [
 
-            "gson"               : "com.google.code.gson:gson:2.8.6",
-            "okhttp3"            : "com.squareup.okhttp3:okhttp:4.1.0",
-            "retrofit"           : "com.squareup.retrofit2:retrofit:${version["retrofit2"]}",
-            "converter-gson"     : "com.squareup.retrofit2:converter-gson:${version["retrofit2"]}",
-            "logging-interceptor": "com.squareup.okhttp3:logging-interceptor:4.9.0",
+            "gson"                      : "com.google.code.gson:gson:2.8.6",
+            "okhttp3"                   : "com.squareup.okhttp3:okhttp:4.1.0",
+            "retrofit"                  : "com.squareup.retrofit2:retrofit:${version["retrofit2"]}",
+            "converter-gson"            : "com.squareup.retrofit2:converter-gson:${version["retrofit2"]}",
+            "logging-interceptor"       : "com.squareup.okhttp3:logging-interceptor:4.9.0",
 
-            "utilcodex"          : "com.blankj:utilcodex:1.31.0",
+            "utilcodex"                 : "com.blankj:utilcodex:1.31.0",
 
-            "livedatabus"        : "io.github.jeremyliao:live-event-bus-x:1.8.0",
+            "livedatabus"               : "io.github.jeremyliao:live-event-bus-x:1.8.0",
+
+            "arouter"                   : "com.alibaba:arouter-api:${version["arouter"]}",
+            "arouter-compiler"          : "com.alibaba:arouter-compiler:${version["arouter"]}",
+
+            "lottie"                    : "com.airbnb.android:lottie:4.2.2",
+
+            "protobuf-javalite"         : "com.google.protobuf:protobuf-javalite:3.18.0",
+
+            //图片加载库
+            "coil"                      : "io.coil-kt:coil:1.4.0",
     ]
 
 }
