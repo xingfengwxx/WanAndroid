@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +15,11 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wangxingxing.network.SHOW_TOAST
 import com.wangxingxing.wanandroid.Constants
+import com.wangxingxing.wanandroid.R
+import com.wangxingxing.wanandroid.base.BaseActivity
 import com.wangxingxing.wanandroid.userDataStore
 import com.wangxingxing.wanandroid.databinding.ActivityLoginBinding
+import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.coroutines.flow.collectLatest
 
 /**
@@ -26,24 +30,22 @@ import kotlinx.coroutines.flow.collectLatest
  */
 
 @Route(path = Constants.PATH_LOGIN)
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
-    private lateinit var viewModel: LoginViewModel
-    private lateinit var binding: ActivityLoginBinding
+    //先初始化viewModel，不然报错
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        setToolbarTitleBack(R.string.login)
 
-        initEvent()
-        initObserver()
+//        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
     }
 
-    private fun initEvent() {
+    override fun initView() {
         binding.apply {
             login.setOnClickListener {
+                showLoading()
                 viewModel.login(
                     binding.tilUsername?.editText?.text.toString(),
                     binding.tilPassword?.editText?.text.toString()
@@ -61,7 +63,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun initObserver() {
+    override fun initData() {
+
+    }
+
+    override fun initObserver() {
         viewModel.userLiveData.observeState(this) {
             onSuccess {
                 LogUtils.i(it)
@@ -94,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             onComplete {
+                dismissLoading()
                 LogUtils.d("登录请求完成")
             }
 

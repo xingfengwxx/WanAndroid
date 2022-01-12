@@ -73,6 +73,8 @@ dependencies {
     implementation cfg.library["protobuf-javalite"]
 
     implementation cfg.library["coil"]
+
+    implementation cfg.library["banner"]
 }
 
 protobuf {

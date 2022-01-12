@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import coil.load
@@ -12,6 +13,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.StringUtils
 import com.wangxingxing.wanandroid.Constants
 import com.wangxingxing.wanandroid.R
+import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.databinding.FragmentMyBinding
 import com.wangxingxing.wanandroid.userDataStore
 import kotlinx.coroutines.flow.collect
@@ -25,12 +27,11 @@ import kotlinx.coroutines.flow.collectLatest
  */
 
 
-class MyFragment : Fragment() {
+class MyFragment : BaseFragment<FragmentMyBinding>() {
 
-    private var _binding: FragmentMyBinding? = null
-    private val binding get() = _binding!!
 
-    private lateinit var viewModel: MyViewModel
+    private val viewModel: MyViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,14 +42,12 @@ class MyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
+//        viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
-        _binding = FragmentMyBinding.inflate(inflater, container, false)
-        initView()
         return binding.root
     }
 
-    private fun initView() {
+    override fun initView() {
 //        binding.ivHead
 //            .load("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.jj20.com%2Fup%2Fallimg%2F1111%2F0Q91Q50307%2F1PQ9150307-8.jpg&refer=http%3A%2F%2Fpic.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644465689&t=6103de4c9d3172f6a7a534d4f09578d9") {
 //                transformations(CircleCropTransformation())
@@ -79,6 +78,12 @@ class MyFragment : Fragment() {
 
     }
 
+    override fun initData() {
+    }
+
+    override fun initObserver() {
+    }
+
     private fun updateInfo() {
         lifecycleScope.launchWhenCreated {
             context?.userDataStore?.data?.collectLatest {
@@ -100,11 +105,6 @@ class MyFragment : Fragment() {
         binding.tvNickname.text = ""
         binding.tvCoin.text = ""
         binding.tvId.text = ""
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 }

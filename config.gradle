@@ -65,6 +65,9 @@ ext {
 
             //图片加载库
             "coil"                      : "io.coil-kt:coil:1.4.0",
+
+            //banner
+            "banner"                    : "io.github.youth5201314:banner:2.2.2",
     ]
 
 }
