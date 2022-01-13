@@ -3,6 +3,7 @@ package com.wangxingxing.wanandroid.net
 import com.wangxingxing.network.base.BaseRepository
 import com.wangxingxing.network.entity.ApiResponse
 import com.wangxingxing.wanandroid.bean.BannerBean
+import com.wangxingxing.wanandroid.bean.HomeArticleBean
 
 /**
  * author : 王星星
@@ -18,6 +19,12 @@ class HomePageRepository : BaseRepository() {
     suspend fun getBannerInfo() : ApiResponse<List<BannerBean>> {
         return executeHttp {
             mService.getBannerInfo()
+        }
+    }
+
+    suspend fun getTopArticle() : ApiResponse<List<HomeArticleBean>> {
+        return executeHttp {
+            mService.getTopArticle()
         }
     }
 }

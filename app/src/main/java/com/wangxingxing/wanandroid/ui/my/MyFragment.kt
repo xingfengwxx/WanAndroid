@@ -32,21 +32,6 @@ class MyFragment : BaseFragment<FragmentMyBinding>() {
 
     private val viewModel: MyViewModel by viewModels()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-//        viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
-
-        return binding.root
-    }
-
     override fun initView() {
 //        binding.ivHead
 //            .load("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.jj20.com%2Fup%2Fallimg%2F1111%2F0Q91Q50307%2F1PQ9150307-8.jpg&refer=http%3A%2F%2Fpic.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1644465689&t=6103de4c9d3172f6a7a534d4f09578d9") {

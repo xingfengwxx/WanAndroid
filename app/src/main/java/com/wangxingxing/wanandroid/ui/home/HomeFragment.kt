@@ -1,69 +1,43 @@
 package com.wangxingxing.wanandroid.ui.home
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.blankj.utilcode.util.LogUtils
+import androidx.fragment.app.viewModels
+import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.databinding.FragmentHomeBinding
 import com.youth.banner.indicator.CircleIndicator
 
-class HomeFragment : Fragment() {
+/**
+ * author : 王星星
+ * date : 2022/1/12 18:21
+ * email : 1099420259@qq.com
+ * description :
+ */
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private lateinit var viewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private val viewModel: HomeViewModel by viewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        viewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-        viewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-
-        initView()
-        initData()
-        initObserver()
-
-        return root
-    }
-
-    private fun initView() {
+    override fun initView() {
         binding.banner.addBannerLifecycleObserver(this)
             .setAdapter(HomeBannerAdapter(viewModel.bannerList))
             .indicator = CircleIndicator(context)
     }
 
-    private fun initData() {
+    override fun initData() {
         viewModel.getBannerInfo()
+        viewModel.getTopArticle()
     }
 
-    private fun initObserver() {
+    override fun initObserver() {
         viewModel.bannerLiveData.observeState(this) {
             onSuccess {
                 binding.banner.setDatas(it)
             }
         }
+
+        viewModel.topArticleLiveData.observeState(this) {
+            onSuccess {
+
+            }
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

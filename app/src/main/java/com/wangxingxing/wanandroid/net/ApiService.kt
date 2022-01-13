@@ -2,6 +2,7 @@ package com.wangxingxing.wanandroid.net
 
 import com.wangxingxing.network.entity.ApiResponse
 import com.wangxingxing.wanandroid.bean.BannerBean
+import com.wangxingxing.wanandroid.bean.HomeArticleBean
 import com.wangxingxing.wanandroid.bean.UserInfoBean
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -34,6 +35,14 @@ interface ApiService {
      */
     @GET("banner/json")
     suspend fun getBannerInfo(): ApiResponse<List<BannerBean>>
+
+    /**
+     * 首页置顶文章
+     *
+     * @return
+     */
+    @GET("article/top/json")
+    suspend fun getTopArticle(): ApiResponse<List<HomeArticleBean>>
 
     companion object {
         const val BASE_URL = "https://wanandroid.com/"

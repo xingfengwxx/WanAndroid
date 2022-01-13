@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-kapt'
     id "com.google.protobuf" version "0.8.17"
 }
+apply from: 'multiple-channel.gradle'
 
 def cfg = rootProject.ext
 
@@ -28,8 +29,28 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            keyAlias 'wxx'
+            keyPassword 'wxx@123456'
+            storePassword 'wxx@123456'
+            storeFile file('../keystore/wxx.jks')
+        }
+
+        debug {
+
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -44,6 +65,15 @@ android {
     buildFeatures {
         viewBinding true
     }
+}
+
+walle {
+    // 指定渠道包的输出路径
+    apkOutputFolder = new File("${project.buildDir}/outputs/channels")
+    // 定制渠道包的APK的文件名称
+    apkFileNameFormat = '${appName}-${packageName}-${channel}-${buildType}-v${versionName}-${versionCode}-${buildTime}.apk'
+    // 渠道配置文件
+    channelFile = new File("${project.getProjectDir()}/channel")
 }
 
 def androidxDependencies = rootProject.ext.androidx
@@ -75,6 +105,8 @@ dependencies {
     implementation cfg.library["coil"]
 
     implementation cfg.library["banner"]
+
+    implementation cfg.library["walle"]
 }
 
 protobuf {
