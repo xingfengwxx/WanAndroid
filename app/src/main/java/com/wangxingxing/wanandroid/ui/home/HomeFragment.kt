@@ -1,6 +1,8 @@
 package com.wangxingxing.wanandroid.ui.home
 
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.databinding.FragmentHomeBinding
 import com.youth.banner.indicator.CircleIndicator
@@ -14,11 +16,17 @@ import com.youth.banner.indicator.CircleIndicator
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel: HomeViewModel by viewModels()
+    private lateinit var mAdapter: HomeArticleAdapter
 
     override fun initView() {
         binding.banner.addBannerLifecycleObserver(this)
             .setAdapter(HomeBannerAdapter(viewModel.bannerList))
             .indicator = CircleIndicator(context)
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        mAdapter = HomeArticleAdapter(viewModel.topArticleList)
+        binding.recyclerView.adapter = mAdapter
     }
 
     override fun initData() {
@@ -35,7 +43,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         viewModel.topArticleLiveData.observeState(this) {
             onSuccess {
-
+                viewModel.topArticleList.clear()
+                viewModel.topArticleList.addAll(it)
+                mAdapter.notifyDataSetChanged()
             }
         }
     }

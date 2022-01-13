@@ -19,6 +19,7 @@ class HomeViewModel : ViewModel() {
     val bannerList: MutableList<BannerBean> = ArrayList()
 
     val topArticleLiveData = StateLiveData<List<HomeArticleBean>>()
+    val topArticleList: MutableList<HomeArticleBean> = ArrayList()
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

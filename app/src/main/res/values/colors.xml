@@ -9,6 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="colorCCE8E8E8">#CCE8E8E8</color>
+    <color name="colorFFF44336">#FFF44336</color>
+    <color name="colorFF29C7DB">#FF29C7DB</color>
 
     <!-- Google Apps Color -->
     <color name="app_blue">#4285F4</color>

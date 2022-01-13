@@ -28,10 +28,15 @@ data class HomeArticleBean(
     val shareUser: String,
     val superChapterId: Int,
     val superChapterName: String,
-    val tags: List<Any>,
+    val tags: List<Tag>,
     val title: String,
     val type: Int,
     val userId: Int,
     val visible: Int,
     val zan: Int
-)
+) {
+    data class Tag(
+        val name: String,
+        val url: String
+    )
+}
