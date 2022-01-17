@@ -2,12 +2,10 @@ package com.wangxingxing.wanandroid.net
 
 import com.wangxingxing.network.entity.ApiResponse
 import com.wangxingxing.wanandroid.bean.BannerBean
+import com.wangxingxing.wanandroid.bean.BasePageBean
 import com.wangxingxing.wanandroid.bean.HomeArticleBean
 import com.wangxingxing.wanandroid.bean.UserInfoBean
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 /**
  * author : 王星星
@@ -26,7 +24,10 @@ interface ApiService {
      */
     @FormUrlEncoded
     @POST("user/login")
-    suspend fun login(@Field("username") userName: String, @Field("password") passWord: String): ApiResponse<UserInfoBean?>
+    suspend fun login(
+        @Field("username") userName: String,
+        @Field("password") passWord: String
+    ): ApiResponse<UserInfoBean?>
 
     /**
      * 首页Banner
@@ -43,6 +44,19 @@ interface ApiService {
      */
     @GET("article/top/json")
     suspend fun getTopArticle(): ApiResponse<List<HomeArticleBean>>
+
+    /**
+     * 分页获取广场文章列表，从0开始
+     *
+     * @param pageNum 页码
+     * @param pageSize 页大小
+     */
+    @GET("user_article/list/{pageNum}/json")
+    suspend fun getSquareArticleList(
+        @Path("pageNum") pageNum: Int,
+        @Query("page_size") pageSize: Int
+    ): BasePageBean<HomeArticleBean>
+
 
     companion object {
         const val BASE_URL = "https://wanandroid.com/"

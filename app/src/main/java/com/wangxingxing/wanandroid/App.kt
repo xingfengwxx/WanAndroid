@@ -1,5 +1,6 @@
 package com.wangxingxing.wanandroid
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.os.Handler
@@ -11,9 +12,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.FormatStrategy
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
+import com.wangxingxing.wanandroid.db.AppDatabase
 import com.wangxingxing.wanandroid.proto.UserSerializer
 import kotlin.system.exitProcess
 
@@ -57,6 +65,19 @@ open class App : Application() {
         LogUtils.getConfig().apply {
             globalTag = "wxx"
         }
+
+        val formatStrategy = PrettyFormatStrategy.newBuilder()
+            .tag("wxx")
+            .build()
+
+        val logAdapter = object : AndroidLogAdapter(formatStrategy) {
+            override fun isLoggable(priority: Int, tag: String?): Boolean {
+                //也可以根据priority的VERBOSE、DEBUG、INFO、WARN、ERROR等不同级别
+                //进行过滤，只在发布版本中保留ERROR的打印等
+                return BuildConfig.DEBUG //只在DEBUG模式下打印log
+            }
+        }
+        Logger.addLogAdapter(logAdapter)
     }
 
     private fun openCrashProtected() {

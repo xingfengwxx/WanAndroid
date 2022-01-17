@@ -1,13 +1,23 @@
 package com.wangxingxing.wanandroid.ui.dashboard
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.wangxingxing.wanandroid.bean.HomeArticleBean
+import com.wangxingxing.wanandroid.db.AppDatabase
+import com.wangxingxing.wanandroid.db.DBManager
+import com.wangxingxing.wanandroid.db.entity.SquareArticleEntity
+import com.wangxingxing.wanandroid.mapper.Entity2BeanMapper
+import com.wangxingxing.wanandroid.net.SquarePageRepository
 
 class DashboardViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    private val repository by lazy {
+        SquarePageRepository(DBManager.db, Entity2BeanMapper())
     }
-    val text: LiveData<String> = _text
+
+    val squareArticleLiveData = repository.getSquareArticleList()
+        .cachedIn(viewModelScope).asLiveData()
+
 }

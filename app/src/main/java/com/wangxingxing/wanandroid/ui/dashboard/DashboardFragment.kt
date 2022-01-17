@@ -1,45 +1,46 @@
 package com.wangxingxing.wanandroid.ui.dashboard
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.wangxingxing.wanandroid.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.databinding.FragmentDashboardBinding
+import com.wangxingxing.wanandroid.ui.dashboard.adapter.FooterAdapter
+import com.wangxingxing.wanandroid.ui.dashboard.adapter.SquareArticleAdapter
+import kotlinx.coroutines.flow.collectLatest
 
-class DashboardFragment : Fragment() {
+class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
-    private var _binding: FragmentDashboardBinding? = null
+    private val viewModel: DashboardViewModel by viewModels()
+    private val mAdapter by lazy { SquareArticleAdapter(requireContext()) }
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    override fun initView() {
+        binding.apply {
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            recyclerView.adapter = mAdapter.withLoadStateFooter(FooterAdapter(mAdapter, requireContext()))
+        }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+    }
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun initData() {
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        lifecycleScope.launchWhenCreated {
+            mAdapter.loadStateFlow.collectLatest { state ->
+                binding.swiperRefresh.isRefreshing = state.refresh is LoadState.Loading
+            }
+        }
+    }
+
+    override fun initObserver() {
+        viewModel.squareArticleLiveData.observe(this, {
+            mAdapter.submitData(lifecycle, it)
+            binding.swiperRefresh.isEnabled = false
         })
-        return root
+
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
 }

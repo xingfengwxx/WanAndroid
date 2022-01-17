@@ -1,4 +1,4 @@
-package com.wangxingxing.wanandroid.bean
+package com.wangxingxing.wanandroid.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,9 +7,14 @@ import androidx.room.PrimaryKey
  * author : 王星星
  * date : 2022/1/14 15:17
  * email : 1099420259@qq.com
- * description : 首页文章Bean
+ * description : 广场文章Bean
  */
-data class HomeArticleBean(
+@Entity
+data class SquareArticleEntity(
+    @PrimaryKey
+    val tid: Int,
+    val page: Int = 0,
+
     val apkLink: String,
     val audit: Int,
     val author: String,
@@ -37,15 +42,11 @@ data class HomeArticleBean(
     val shareUser: String,
     val superChapterId: Int,
     val superChapterName: String,
-    val tags: List<Tag>,
     val title: String,
     val type: Int,
     val userId: Int,
     val visible: Int,
     val zan: Int
 ) {
-    data class Tag(
-        val name: String,
-        val url: String
-    )
+
 }

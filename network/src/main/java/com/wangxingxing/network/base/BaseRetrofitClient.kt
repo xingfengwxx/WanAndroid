@@ -1,11 +1,11 @@
 package com.wangxingxing.network.base
 
 import com.wangxingxing.network.BuildConfig
+import com.wangxingxing.network.LogUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 /**
@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit
  * description : RetrofitClient基类
  */
 abstract class BaseRetrofitClient {
+
+    private val TAG = "okHttp"
 
     companion object Client {
         private const val TIME_OUT = 5
@@ -29,7 +31,9 @@ abstract class BaseRetrofitClient {
     }
 
     private fun getHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        val logging = HttpLoggingInterceptor()
+        val logging = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
+            LogUtils.w(TAG, it)
+        })
         if (BuildConfig.DEBUG) {
             logging.level = HttpLoggingInterceptor.Level.BODY
         } else {

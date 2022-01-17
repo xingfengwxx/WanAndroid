@@ -20,6 +20,7 @@ ext {
             navigation  : "2.3.5",
             retrofit2   : "2.9.0",
             arouter     : "1.5.2",
+            room        : "2.3.0",
     ]
 
     androidx = [
@@ -42,6 +43,10 @@ ext {
 
             "datastore"                 : "androidx.datastore:datastore:1.0.0",
 
+            "paging-runtime"            : "androidx.paging:paging-runtime:3.0.0-alpha03",
+
+            "swiperefreshlayout"        : "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
     ]
 
     library = [
@@ -53,6 +58,8 @@ ext {
             "logging-interceptor"       : "com.squareup.okhttp3:logging-interceptor:4.9.0",
 
             "utilcodex"                 : "com.blankj:utilcodex:1.31.0",
+
+            "logger"                    : "com.orhanobut:logger:2.2.0",
 
             "livedatabus"               : "io.github.jeremyliao:live-event-bus-x:1.8.0",
 
@@ -71,6 +78,10 @@ ext {
 
             //walle多渠道打包
             "walle"                     : "com.meituan.android.walle:library:1.1.7",
+
+            "room-runtime"              : "androidx.room:room-runtime:${version["room"]}",
+            "room-ktx"                  : "androidx.room:room-ktx:${version["room"]}",
+            "room-compiler"             : "androidx.room:room-compiler:${version["room"]}",
     ]
 
 }
