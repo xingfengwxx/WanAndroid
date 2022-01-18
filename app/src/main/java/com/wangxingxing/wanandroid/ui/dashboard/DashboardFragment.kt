@@ -35,7 +35,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     }
 
     override fun initObserver() {
-        viewModel.squareArticleLiveData.observe(this, {
+        viewModel.squareArticleNetLiveData.observe(this, {
             mAdapter.submitData(lifecycle, it)
             binding.swiperRefresh.isEnabled = false
         })

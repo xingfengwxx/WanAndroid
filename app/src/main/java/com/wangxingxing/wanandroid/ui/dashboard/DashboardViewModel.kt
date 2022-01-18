@@ -20,4 +20,8 @@ class DashboardViewModel : ViewModel() {
     val squareArticleLiveData = repository.getSquareArticleList()
         .cachedIn(viewModelScope).asLiveData()
 
+    val squareArticleNetLiveData = repository.getSquareArticleListNet()
+        .cachedIn(viewModelScope).asLiveData()
+
+    val list = listOf<String>()
 }

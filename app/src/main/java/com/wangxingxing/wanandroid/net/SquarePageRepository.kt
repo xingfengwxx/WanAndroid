@@ -23,17 +23,18 @@ class SquarePageRepository(
     private val mapper2Bean: Mapper<SquareArticleEntity, HomeArticleBean>
 ) : BaseRepository() {
 
+    private val PAGE_SIZE = 20
+
     private val mService by lazy {
         RetrofitClient.service
     }
 
-
     fun getSquareArticleList(): Flow<PagingData<HomeArticleBean>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 20,
+                pageSize = PAGE_SIZE,
                 prefetchDistance = 1,
-                initialLoadSize = 20
+                initialLoadSize = PAGE_SIZE
             ),
             remoteMediator = SquarePageMediator(mService, database) // 请求网络数据，放入数据库
         ) {
@@ -43,5 +44,13 @@ class SquarePageRepository(
             .map { pagingData ->
                 pagingData.map { mapper2Bean.map(it) } // 对数据进行转换，给到UI显示
             }
+    }
+
+    fun getSquareArticleListNet(): Flow<PagingData<HomeArticleBean>> {
+        return Pager(
+            config = PagingConfig(PAGE_SIZE),
+            pagingSourceFactory = { SquarePagingSource(mService)}
+        ).flow
+            .flowOn(Dispatchers.IO)
     }
 }

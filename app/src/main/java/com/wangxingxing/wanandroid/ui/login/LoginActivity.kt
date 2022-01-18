@@ -6,6 +6,8 @@ import android.text.TextWatcher
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +21,7 @@ import com.wangxingxing.wanandroid.R
 import com.wangxingxing.wanandroid.base.BaseActivity
 import com.wangxingxing.wanandroid.userDataStore
 import com.wangxingxing.wanandroid.databinding.ActivityLoginBinding
+import com.wangxingxing.wanandroid.settings
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.coroutines.flow.collectLatest
 
@@ -35,6 +38,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     //先初始化viewModel，不然报错
     private val viewModel: LoginViewModel by viewModels()
 
+    private var mPassword = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setToolbarTitleBack(R.string.login)
@@ -46,6 +51,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         binding.apply {
             login.setOnClickListener {
                 showLoading()
+                mPassword = binding.tilPassword?.editText?.text.toString()
                 viewModel.login(
                     binding.tilUsername?.editText?.text.toString(),
                     binding.tilPassword?.editText?.text.toString()
@@ -64,7 +70,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     override fun initData() {
-
+        lifecycleScope.launchWhenCreated {
+            settings.data.collectLatest {
+                val username = it[stringPreferencesKey(Constants.PRE_KEY_LAST_USER_NAME)]
+                val password = it[stringPreferencesKey(Constants.PRE_KEY_LAST_USER_PASSWORD)]
+                binding.tilUsername?.editText?.setText(username)
+                binding.tilPassword?.editText?.setText(password)
+            }
+        }
     }
 
     override fun initObserver() {
@@ -93,6 +106,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                                 .build()
                         }
 
+                        settings.edit { preferences ->
+                            preferences[stringPreferencesKey(Constants.PRE_KEY_LAST_USER_NAME)] = it.username
+                            preferences[stringPreferencesKey(Constants.PRE_KEY_LAST_USER_PASSWORD)] = mPassword
+                        }
                     }
                 }
 

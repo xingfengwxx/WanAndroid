@@ -1,16 +1,15 @@
 package com.wangxingxing.wanandroid.base
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.viewbinding.ViewBinding
-import com.wangxingxing.wanandroid.databinding.ActivityBaseBinding
-import java.lang.reflect.ParameterizedType
 import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
+import com.wangxingxing.wanandroid.databinding.ActivityBaseBinding
+import com.wangxingxing.wanandroid.dialog.LoadingDialogFragment
+import java.lang.reflect.ParameterizedType
 
 
 /**
@@ -23,6 +22,8 @@ open abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     lateinit var binding: T
     private lateinit var baseBinding: ActivityBaseBinding
+
+    private lateinit var loadingDialog: LoadingDialogFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,8 @@ open abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 //        val cls = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
 //        binding = cls.getMethod("inflate", LayoutInflater::class.java).invoke(null, LayoutInflater.from(this)) as T
 //        setContentView(binding.root)
+
+        loadingDialog = LoadingDialogFragment.newInstance()
 
         initView()
         initData()
@@ -73,11 +76,13 @@ open abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     fun showLoading() {
         //避免接口请求返回时间太短，出现loading闪烁问题。500ms以内不会显示loading，显示loading后至少显示500ms。
-        baseBinding.loadingProgressBar.show()
+//        baseBinding.loadingProgressBar.show()
+        loadingDialog.show(supportFragmentManager, "loadingDialog")
     }
 
     fun dismissLoading() {
-        baseBinding.loadingProgressBar.hide()
+//        baseBinding.loadingProgressBar.hide()
+        loadingDialog.dismiss()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

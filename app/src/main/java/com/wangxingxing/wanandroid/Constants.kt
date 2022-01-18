@@ -1,11 +1,17 @@
 package com.wangxingxing.wanandroid
 
+import android.content.Context
+import androidx.datastore.preferences.preferencesDataStore
+
 /**
  * author : 王星星
  * date : 2022/1/10 14:39
  * email : 1099420259@qq.com
  * description :
  */
+
+val Context.settings by preferencesDataStore(name = "settings")
+
 class Constants  {
 
     companion object {
@@ -16,5 +22,7 @@ class Constants  {
 
         //DataStore
         const val PROTO_USER = "user.pb"
+        const val PRE_KEY_LAST_USER_NAME = "pre_key_last_user_name"
+        const val PRE_KEY_LAST_USER_PASSWORD = "pre_key_last_user_password"
     }
 }

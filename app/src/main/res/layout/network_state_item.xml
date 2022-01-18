@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/footer_retry"
-        android:textColor="@android:color/background_dark" />
+        android:textColor="@color/white" />
 
     <LinearLayout
         android:id="@+id/ll_loading"
@@ -42,8 +42,9 @@
 
     <TextView
         android:id="@+id/errorMsg"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textColor="@color/black"
         android:text="连接超时"/>
 
