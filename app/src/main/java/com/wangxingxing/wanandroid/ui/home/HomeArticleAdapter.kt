@@ -47,13 +47,15 @@ class HomeArticleAdapter(val list: List<HomeArticleBean>, val listener: IListene
         holder.binding.ivFav.setOnClickListener {
             listener.collectOrCancel(it, position)
         }
+
+        holder.binding.root.setOnClickListener {
+            listener.onItemClick(it, position)
+        }
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
-
-    fun getData(): List<HomeArticleBean> = list
 
     inner class ViewHolder(val binding: ItemHomeArticleBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -61,5 +63,6 @@ class HomeArticleAdapter(val list: List<HomeArticleBean>, val listener: IListene
 
     interface IListener {
         fun collectOrCancel(view: View, position: Int)
+        fun onItemClick(view: View, position: Int)
     }
 }

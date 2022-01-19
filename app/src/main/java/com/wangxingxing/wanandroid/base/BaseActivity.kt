@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.alibaba.android.arouter.launcher.ARouter
 import com.wangxingxing.wanandroid.databinding.ActivityBaseBinding
 import com.wangxingxing.wanandroid.dialog.LoadingDialogFragment
 import java.lang.reflect.ParameterizedType
@@ -29,6 +30,7 @@ open abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         baseBinding = ActivityBaseBinding.inflate(layoutInflater)
         setContentView(baseBinding.root)
+        ARouter.getInstance().inject(this)
 
         val cls =
             (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
@@ -65,6 +67,11 @@ open abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
 
     fun setToolbarTitleBack(@StringRes resId: Int) {
         setToolbarTitle(resId)
+        showBack()
+    }
+
+    fun setToolbarTitleBack(title: CharSequence) {
+        setToolbarTitle(title)
         showBack()
     }
 

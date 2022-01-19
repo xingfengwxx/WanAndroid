@@ -4,7 +4,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.orhanobut.logger.Logger
+import com.wangxingxing.wanandroid.Constants
 import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.databinding.FragmentHomeBinding
 import com.youth.banner.indicator.CircleIndicator
@@ -79,4 +81,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeArticleAdapter.ILi
         viewModel.collectOrCancel(mAdapter.list[position])
     }
 
+    override fun onItemClick(view: View, position: Int) {
+        val bean = mAdapter.list[position]
+        ARouter.getInstance()
+            .build(Constants.PATH_WEB)
+            .withString("title", bean.title)
+            .withString("url", bean.link)
+            .navigation()
+    }
 }

@@ -13,6 +13,7 @@ class Constants  {
         const val PATH_SPLASH = "/activity/splash"
         const val PATH_MAIN = "/activity/main"
         const val PATH_LOGIN = "/activity/login"
+        const val PATH_WEB = "/activity/web"
 
         //DataStore
         const val PROTO_USER = "user.pb"

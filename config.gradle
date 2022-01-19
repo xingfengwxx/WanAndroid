@@ -84,6 +84,9 @@ ext {
             "room-ktx"                  : "androidx.room:room-ktx:${version["room"]}",
 //            "room-paging"               : "androidx.room:room-paging:2.4.1",
             "room-compiler"             : "androidx.room:room-compiler:${version["room"]}",
+
+            //基于腾讯X5WebView的封装库
+            "x5-webview"                : "cn.yc:WebViewLib:1.2.4"
     ]
 
 }

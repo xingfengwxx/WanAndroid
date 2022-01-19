@@ -112,6 +112,8 @@ dependencies {
     implementation cfg.library["room-ktx"]
 //    implementation cfg.library["room-paging"]
     kapt cfg.library["room-compiler"]
+
+    implementation cfg.library["x5-webview"]
 }
 
 protobuf {

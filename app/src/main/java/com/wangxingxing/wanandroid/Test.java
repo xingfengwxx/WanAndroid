@@ -2,6 +2,7 @@ package com.wangxingxing.wanandroid;
 
 import androidx.annotation.Nullable;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.wangxingxing.wanandroid.bean.BannerBean;
