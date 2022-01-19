@@ -40,6 +40,7 @@ dependencies {
 
     //为了不引入Context，先用LiveDataBus发送toast
     api cfg.library["livedatabus"]
+    api cfg.library["utilcodex"]
 
     api cfg.library["gson"]
     api cfg.library["okhttp3"]

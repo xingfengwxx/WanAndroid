@@ -2,6 +2,9 @@ package com.wangxingxing.wanandroid.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.wangxingxing.wanandroid.db.dao.CollectDao
+import com.wangxingxing.wanandroid.db.dao.SquareArticleDao
+import com.wangxingxing.wanandroid.db.entity.CollectEntity
 import com.wangxingxing.wanandroid.db.entity.SquareArticleEntity
 
 /**
@@ -11,9 +14,11 @@ import com.wangxingxing.wanandroid.db.entity.SquareArticleEntity
  * description :
  */
 @Database(
-    entities = [SquareArticleEntity::class],
+    entities = [SquareArticleEntity::class, CollectEntity::class],
     version = 1, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun squareArticleEntityDao(): SquareArticleDao
+
+    abstract fun collectDao(): CollectDao
 }

@@ -5,11 +5,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.LogUtils
@@ -21,8 +18,9 @@ import com.wangxingxing.wanandroid.R
 import com.wangxingxing.wanandroid.base.BaseActivity
 import com.wangxingxing.wanandroid.userDataStore
 import com.wangxingxing.wanandroid.databinding.ActivityLoginBinding
+import com.wangxingxing.wanandroid.db.DBManager
+import com.wangxingxing.wanandroid.db.entity.CollectEntity
 import com.wangxingxing.wanandroid.settings
-import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.coroutines.flow.collectLatest
 
 /**
@@ -110,6 +108,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                             preferences[stringPreferencesKey(Constants.PRE_KEY_LAST_USER_NAME)] = it.username
                             preferences[stringPreferencesKey(Constants.PRE_KEY_LAST_USER_PASSWORD)] = mPassword
                         }
+
+                        val collectDao = DBManager.db.collectDao()
+                        collectDao.clear()
+                        val collectList = mutableListOf<CollectEntity>()
+                        it.collectIds.forEach {
+                            collectList.add(CollectEntity(0, it))
+                        }
+                        collectDao.insertAll(collectList)
                     }
                 }
 

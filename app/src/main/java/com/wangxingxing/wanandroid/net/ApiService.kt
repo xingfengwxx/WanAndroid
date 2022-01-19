@@ -57,6 +57,30 @@ interface ApiService {
         @Query("page_size") pageSize: Int
     ): BasePageBean<HomeArticleBean>
 
+    /**
+     * 收藏文章
+     *
+     * @param articleId 文章Id
+     * @param title
+     * @param link
+     * @param author
+     */
+    @POST("lg/collect/user_article/update/{articleId}/json")
+    suspend fun collectArticle(
+        @Path("articleId") articleId: Int,
+        @Query("title") title: String,
+        @Query("link") link: String,
+        @Query("author") author: String
+    ): ApiResponse<Void>
+
+    /**
+     * 取消收藏文章
+     *
+     * @param articleId 文章Id
+     */
+    @POST("lg/uncollect_originId/{articleId}/json")
+    suspend fun unCollectArticle(@Path("articleId") articleId: Int): ApiResponse<Void>
+
 
     companion object {
         const val BASE_URL = "https://wanandroid.com/"

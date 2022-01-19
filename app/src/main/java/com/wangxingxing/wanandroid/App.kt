@@ -1,29 +1,22 @@
 package com.wangxingxing.wanandroid
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.os.Process
-import android.util.Log
 import androidx.datastore.dataStore
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.FormatStrategy
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
-import com.wangxingxing.wanandroid.db.AppDatabase
 import com.wangxingxing.wanandroid.proto.UserSerializer
-import kotlin.system.exitProcess
 
 /**
  * author : 王星星
@@ -35,6 +28,8 @@ val Context.userDataStore by dataStore(
     fileName = Constants.PROTO_USER,
     serializer = UserSerializer
 )
+
+val Context.settings by preferencesDataStore(name = "settings")
 
 open class App : Application() {
     companion object {
@@ -118,5 +113,6 @@ open class App : Application() {
         }
     }
 }
+
 
 

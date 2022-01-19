@@ -1,4 +1,4 @@
-package com.wangxingxing.wanandroid.db
+package com.wangxingxing.wanandroid.db.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao

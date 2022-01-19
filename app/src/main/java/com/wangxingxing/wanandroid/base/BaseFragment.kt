@@ -1,10 +1,14 @@
 package com.wangxingxing.wanandroid.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.viewbinding.ViewBinding
 import java.lang.reflect.ParameterizedType
 
@@ -14,7 +18,7 @@ import java.lang.reflect.ParameterizedType
  * email : 1099420259@qq.com
  * description :
  */
-open abstract class BaseFragment<T : ViewBinding> : Fragment() {
+open abstract class BaseFragment<T : ViewBinding> : Fragment(), LifecycleObserver {
 
     private var _binding: T? = null
     val binding get() = _binding!!
@@ -40,6 +44,18 @@ open abstract class BaseFragment<T : ViewBinding> : Fragment() {
 
         return binding.root
     }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onCreated() {
+        activity?.lifecycle?.removeObserver(this)
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activity?.lifecycle?.addObserver(this)
+    }
+
 
     abstract fun initView()
     abstract fun initData()

@@ -16,7 +16,7 @@ import com.wangxingxing.wanandroid.databinding.ItemHomeArticleBinding
  * email : 1099420259@qq.com
  * description :
  */
-class HomeArticleAdapter(val list: List<HomeArticleBean>) :
+class HomeArticleAdapter(val list: List<HomeArticleBean>, val listener: IListener) :
     RecyclerView.Adapter<HomeArticleAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,13 +43,23 @@ class HomeArticleAdapter(val list: List<HomeArticleBean>) :
         holder.binding.tvType.text = "${bean.chapterName}/${bean.superChapterName}"
 
         holder.binding.ivFav.setImageResource(if (bean.collect) R.drawable.ic_favorite else R.drawable.ic_favorite_border)
+
+        holder.binding.ivFav.setOnClickListener {
+            listener.collectOrCancel(it, position)
+        }
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
+    fun getData(): List<HomeArticleBean> = list
+
     inner class ViewHolder(val binding: ItemHomeArticleBinding) : RecyclerView.ViewHolder(binding.root) {
 
+    }
+
+    interface IListener {
+        fun collectOrCancel(view: View, position: Int)
     }
 }

@@ -12,7 +12,7 @@ import com.wangxingxing.wanandroid.bean.UserInfoBean
  */
 class UserRepository : BaseRepository() {
     private val mService by lazy {
-        RetrofitClient.service
+        RetrofitClient.loginService
     }
 
     suspend fun login(username: String, password: String): ApiResponse<UserInfoBean?> {

@@ -1,17 +1,11 @@
 package com.wangxingxing.wanandroid
 
-import android.content.Context
-import androidx.datastore.preferences.preferencesDataStore
-
 /**
  * author : 王星星
  * date : 2022/1/10 14:39
  * email : 1099420259@qq.com
  * description :
  */
-
-val Context.settings by preferencesDataStore(name = "settings")
-
 class Constants  {
 
     companion object {

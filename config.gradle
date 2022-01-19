@@ -82,6 +82,7 @@ ext {
 
             "room-runtime"              : "androidx.room:room-runtime:${version["room"]}",
             "room-ktx"                  : "androidx.room:room-ktx:${version["room"]}",
+//            "room-paging"               : "androidx.room:room-paging:2.4.1",
             "room-compiler"             : "androidx.room:room-compiler:${version["room"]}",
     ]
 

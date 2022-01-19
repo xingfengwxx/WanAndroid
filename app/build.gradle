@@ -95,8 +95,6 @@ dependencies {
 
     implementation cfg.library["logger"]
 
-    implementation cfg.library["utilcodex"]
-
     implementation cfg.library["arouter"]
     kapt cfg.library["arouter-compiler"]
 
@@ -112,6 +110,7 @@ dependencies {
 
     implementation cfg.library["room-runtime"]
     implementation cfg.library["room-ktx"]
+//    implementation cfg.library["room-paging"]
     kapt cfg.library["room-compiler"]
 }
 
