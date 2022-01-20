@@ -114,6 +114,8 @@ dependencies {
     kapt cfg.library["room-compiler"]
 
     implementation cfg.library["x5-webview"]
+
+    implementation cfg.library["autosize"]
 }
 
 protobuf {

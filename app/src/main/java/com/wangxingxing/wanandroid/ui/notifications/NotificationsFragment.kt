@@ -9,6 +9,12 @@ import com.wangxingxing.wanandroid.Constants
 import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.databinding.FragmentNotificationsBinding
 
+/**
+ * author : 王星星
+ * date : 2022/1/20 14:59
+ * email : 1099420259@qq.com
+ * description : 公众号页面
+ */
 class NotificationsFragment : BaseFragment<FragmentNotificationsBinding>() {
 
     private val viewModel: NotificationsViewModel by viewModels()
