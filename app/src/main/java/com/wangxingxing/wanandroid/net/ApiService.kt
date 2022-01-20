@@ -1,10 +1,7 @@
 package com.wangxingxing.wanandroid.net
 
 import com.wangxingxing.network.entity.ApiResponse
-import com.wangxingxing.wanandroid.bean.BannerBean
-import com.wangxingxing.wanandroid.bean.BasePageBean
-import com.wangxingxing.wanandroid.bean.HomeArticleBean
-import com.wangxingxing.wanandroid.bean.UserInfoBean
+import com.wangxingxing.wanandroid.bean.*
 import retrofit2.http.*
 
 /**
@@ -80,6 +77,14 @@ interface ApiService {
      */
     @POST("lg/uncollect_originId/{articleId}/json")
     suspend fun unCollectArticle(@Path("articleId") articleId: Int): ApiResponse<Void>
+
+    /**
+     * 公众号tab列表
+     *
+     * @return
+     */
+    @GET("wxarticle/chapters/json")
+    suspend fun getWeChatAccountList(): ApiResponse<List<WeChatAccountBean>>
 
 
     companion object {

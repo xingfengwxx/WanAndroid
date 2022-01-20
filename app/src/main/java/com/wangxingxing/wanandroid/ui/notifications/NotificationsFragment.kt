@@ -1,56 +1,50 @@
 package com.wangxingxing.wanandroid.ui.notifications
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.launcher.ARouter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.wangxingxing.wanandroid.Constants
-import com.wangxingxing.wanandroid.R
+import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.databinding.FragmentNotificationsBinding
 
-class NotificationsFragment : Fragment() {
+class NotificationsFragment : BaseFragment<FragmentNotificationsBinding>() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
-    private var _binding: FragmentNotificationsBinding? = null
+    private val viewModel: NotificationsViewModel by viewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var articleFragmentAdapter: ArticleFragmentAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
-
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-
-        initView()
-
-        return root
-    }
-
-    private fun initView() {
-        binding.textNotifications.setOnClickListener {
-            ARouter.getInstance().build(Constants.PATH_LOGIN)
+    override fun initView() {
+        articleFragmentAdapter = ArticleFragmentAdapter(this)
+        binding.apply {
+            viewPager.adapter = articleFragmentAdapter
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun initData() {
+        viewModel.getWeChatAccountList()
     }
+
+    override fun initObserver() {
+        viewModel.weChatAccountLiveData.observeState(this) {
+            onSuccess {
+                TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+                    tab.text= it[position].name
+                }.attach()
+            }
+        }
+    }
+
+    class ArticleFragmentAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+        override fun getItemCount(): Int = 10
+
+        override fun createFragment(position: Int): Fragment {
+            return ARouter.getInstance()
+                .build(Constants.PATH_WE_CHAT_ARTICLE)
+                .navigation() as Fragment
+        }
+
+    }
+
 }

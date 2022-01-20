@@ -15,6 +15,8 @@ class Constants  {
         const val PATH_LOGIN = "/activity/login"
         const val PATH_WEB = "/activity/web"
 
+        const val PATH_WE_CHAT_ARTICLE = "/fragment/we_chat_article"
+
         //DataStore
         const val PROTO_USER = "user.pb"
         const val PRE_KEY_LAST_USER_NAME = "pre_key_last_user_name"
