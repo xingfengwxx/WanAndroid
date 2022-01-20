@@ -86,6 +86,19 @@ interface ApiService {
     @GET("wxarticle/chapters/json")
     suspend fun getWeChatAccountList(): ApiResponse<List<WeChatAccountBean>>
 
+    /**
+     * 查看某个公众号历史数据
+     *
+     * @param accountId 公众号 ID：拼接在 url 中，eg:405
+     * @param pageNum 公众号页码：拼接在url 中，eg:1
+     * @return
+     */
+    @GET("wxarticle/list/{accountId}/{pageNum}/json")
+    suspend fun getWeChatArticleList(
+        @Path("accountId") accountId: Int,
+        @Path("pageNum") pageNum: Int
+    ): BasePageBean<HomeArticleBean>
+
 
     companion object {
         const val BASE_URL = "https://wanandroid.com/"

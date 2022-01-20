@@ -2,6 +2,8 @@ package com.wangxingxing.wanandroid.net
 
 import com.wangxingxing.network.base.BaseRepository
 import com.wangxingxing.network.entity.ApiResponse
+import com.wangxingxing.wanandroid.bean.BasePageBean
+import com.wangxingxing.wanandroid.bean.HomeArticleBean
 import com.wangxingxing.wanandroid.bean.WeChatAccountBean
 
 /**
@@ -20,6 +22,10 @@ class NotificationsRepo : BaseRepository() {
         return executeHttp {
             mService.getWeChatAccountList()
         }
+    }
+
+    suspend fun getWeChatArticleList(accountId: Int, pageNum: Int): BasePageBean<HomeArticleBean> {
+        return mService.getWeChatArticleList(accountId, pageNum)
     }
 
 }

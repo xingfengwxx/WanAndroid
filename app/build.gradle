@@ -116,6 +116,8 @@ dependencies {
     implementation cfg.library["x5-webview"]
 
     implementation cfg.library["autosize"]
+
+    implementation cfg.library["recyclerview-adapter-helper"]
 }
 
 protobuf {
