@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.wangxingxing.wanandroid.R
 import com.wangxingxing.wanandroid.bean.HomeArticleBean
 import com.wangxingxing.wanandroid.databinding.ItemHomeArticleBinding
+import com.wangxingxing.wanandroid.ui.home.HomeArticleAdapter
 
 /**
  * author : 王星星
@@ -17,7 +18,7 @@ import com.wangxingxing.wanandroid.databinding.ItemHomeArticleBinding
  * email : 1099420259@qq.com
  * description :
  */
-class SquareArticleAdapter(private val context: Context) : PagingDataAdapter<HomeArticleBean, BindingViewHolder>(object : DiffUtil.ItemCallback<HomeArticleBean>(){
+class SquareArticleAdapter(private val context: Context, private val listener: SquareArticleAdapter.IListener) : PagingDataAdapter<HomeArticleBean, BindingViewHolder>(object : DiffUtil.ItemCallback<HomeArticleBean>(){
     override fun areItemsTheSame(oldItem: HomeArticleBean, newItem: HomeArticleBean): Boolean {
         return oldItem.id == newItem.id
     }
@@ -51,12 +52,25 @@ class SquareArticleAdapter(private val context: Context) : PagingDataAdapter<Hom
             binding.tvType.text = "${bean.chapterName}/${bean.superChapterName}"
 
             binding.ivFav.setImageResource(if (bean.collect) R.drawable.ic_favorite else R.drawable.ic_favorite_border)
+
+            holder.binding.ivFav.setOnClickListener {
+                listener.collectOrCancel(it, position)
+            }
+
+            holder.binding.root.setOnClickListener {
+                listener.onItemClick(it, position)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder {
         val binding = ItemHomeArticleBinding.inflate(LayoutInflater.from(context), parent, false)
         return BindingViewHolder(binding)
+    }
+
+    interface IListener {
+        fun collectOrCancel(view: View, position: Int)
+        fun onItemClick(view: View, position: Int)
     }
 
 }

@@ -23,15 +23,6 @@ class WebActivity : BaseActivity<ActivityWebBinding>() {
     @Autowired
     var url: String? = null
 
-    @JvmField
-    @Autowired
-    var title: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setToolbarTitleBack(title!!)
-    }
-
     override fun initView() {
         binding.progress.show()
         binding.progress.setColor(
@@ -75,7 +66,7 @@ class WebActivity : BaseActivity<ActivityWebBinding>() {
         }
 
         override fun showTitle(title: String?) {
-
+            setToolbarTitleBack(title!!)
         }
 
     }

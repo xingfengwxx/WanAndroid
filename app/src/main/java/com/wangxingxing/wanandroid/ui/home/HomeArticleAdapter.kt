@@ -16,7 +16,7 @@ import com.wangxingxing.wanandroid.databinding.ItemHomeArticleBinding
  * email : 1099420259@qq.com
  * description :
  */
-class HomeArticleAdapter(val list: List<HomeArticleBean>, val listener: IListener) :
+class HomeArticleAdapter(val list: List<HomeArticleBean>, private val listener: IListener) :
     RecyclerView.Adapter<HomeArticleAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

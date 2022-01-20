@@ -1,20 +1,23 @@
 package com.wangxingxing.wanandroid.ui.dashboard
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
+import com.wangxingxing.wanandroid.Constants
 import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.databinding.FragmentDashboardBinding
 import com.wangxingxing.wanandroid.ui.dashboard.adapter.FooterAdapter
 import com.wangxingxing.wanandroid.ui.dashboard.adapter.SquareArticleAdapter
 import kotlinx.coroutines.flow.collectLatest
 
-class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
+class DashboardFragment : BaseFragment<FragmentDashboardBinding>(), SquareArticleAdapter.IListener {
 
     private val viewModel: DashboardViewModel by viewModels()
-    private val mAdapter by lazy { SquareArticleAdapter(requireContext()) }
+    private val mAdapter by lazy { SquareArticleAdapter(requireContext(), this) }
 
     override fun initView() {
         binding.apply {
@@ -40,6 +43,18 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             binding.swiperRefresh.isEnabled = false
         })
 
+    }
+
+    override fun collectOrCancel(view: View, position: Int) {
+
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        val bean = mAdapter.snapshot().items[position]
+        ARouter.getInstance()
+            .build(Constants.PATH_WEB)
+            .withString("url", bean.link)
+            .navigation()
     }
 
 

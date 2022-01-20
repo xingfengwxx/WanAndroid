@@ -85,7 +85,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeArticleAdapter.ILi
         val bean = mAdapter.list[position]
         ARouter.getInstance()
             .build(Constants.PATH_WEB)
-            .withString("title", bean.title)
             .withString("url", bean.link)
             .navigation()
     }
