@@ -8,8 +8,10 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.orhanobut.logger.Logger
 import com.wangxingxing.wanandroid.Constants
 import com.wangxingxing.wanandroid.base.BaseFragment
+import com.wangxingxing.wanandroid.bean.BannerBean
 import com.wangxingxing.wanandroid.databinding.FragmentHomeBinding
 import com.youth.banner.indicator.CircleIndicator
+import com.youth.banner.listener.OnBannerListener
 
 /**
  * author : 王星星
@@ -73,6 +75,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeArticleAdapter.ILi
                 mAdapter.list[mCurPosition!!].collect = false
                 mAdapter.notifyDataSetChanged()
             }
+        }
+
+        binding.banner.setOnBannerListener { data, position ->
+            ARouter.getInstance()
+                .build(Constants.PATH_WEB)
+                .withString("url", (data as BannerBean).url)
+                .navigation()
         }
     }
 
