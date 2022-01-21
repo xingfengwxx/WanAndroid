@@ -2,6 +2,7 @@ package com.wangxingxing.wanandroid.ui.notifications
 
 import com.blankj.utilcode.util.StringUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.wangxingxing.wanandroid.R
 import com.wangxingxing.wanandroid.bean.HomeArticleBean
@@ -14,13 +15,14 @@ import com.wangxingxing.wanandroid.bean.HomeArticleBean
  */
 class WeChatArticleAdapter(layoutResId: Int) : BaseQuickAdapter<HomeArticleBean, BaseViewHolder>(
     layoutResId
-) {
+), LoadMoreModule {
     override fun convert(holder: BaseViewHolder, item: HomeArticleBean) {
         holder.setGone(R.id.tv_top, true)
-        holder.setVisible(R.id.tv_new, item.fresh)
+        holder.setGone(R.id.tv_new, !item.fresh)
+
         item.tags.forEach {
-            holder.setVisible(R.id.tv_site_postings, it.name == StringUtils.getString(R.string.site_postings))
-            holder.setVisible(R.id.tv_wechat_public_account, it.name == StringUtils.getString(R.string.wechat_public_account))
+            holder.setGone(R.id.tv_site_postings, it.name != StringUtils.getString(R.string.site_postings))
+            holder.setGone(R.id.tv_wechat_public_account, it.name == StringUtils.getString(R.string.wechat_public_account))
         }
 
         holder.setText(R.id.tv_author, item.author)

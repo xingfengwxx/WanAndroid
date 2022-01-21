@@ -20,8 +20,12 @@ import com.ycbjie.webviewlib.X5WebUtils
 class WebActivity : BaseActivity<ActivityWebBinding>() {
 
     @JvmField
-    @Autowired
+    @Autowired(name = Constants.KEY_URL)
     var url: String? = null
+
+    @JvmField
+    @Autowired(name = Constants.KEY_TITLE)
+    var title: String? = null
 
     override fun initView() {
         binding.progress.show()
@@ -33,6 +37,7 @@ class WebActivity : BaseActivity<ActivityWebBinding>() {
 
     override fun initData() {
         Logger.d("title: $title, url: $url")
+        setToolbarTitleBack(title!!)
         binding.webView.loadUrl(url)
     }
 
@@ -66,7 +71,7 @@ class WebActivity : BaseActivity<ActivityWebBinding>() {
         }
 
         override fun showTitle(title: String?) {
-            setToolbarTitleBack(title!!)
+
         }
 
     }

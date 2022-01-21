@@ -1,5 +1,7 @@
 package com.wangxingxing.wanandroid
 
+import com.alibaba.android.arouter.launcher.ARouter
+
 /**
  * author : 王星星
  * date : 2022/1/10 14:39
@@ -16,6 +18,9 @@ class Constants  {
         const val PATH_WEB = "/activity/web"
 
         const val PATH_WE_CHAT_ARTICLE = "/fragment/we_chat_article"
+
+        const val KEY_URL = "key_url"
+        const val KEY_TITLE = "key_title"
 
         //DataStore
         const val PROTO_USER = "user.pb"

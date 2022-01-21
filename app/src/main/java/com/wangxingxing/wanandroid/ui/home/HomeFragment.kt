@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.orhanobut.logger.Logger
+import com.wangxingxing.wanandroid.ARouterIntent
 import com.wangxingxing.wanandroid.Constants
 import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.bean.BannerBean
@@ -92,9 +93,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeArticleAdapter.ILi
 
     override fun onItemClick(view: View, position: Int) {
         val bean = mAdapter.list[position]
-        ARouter.getInstance()
-            .build(Constants.PATH_WEB)
-            .withString("url", bean.link)
-            .navigation()
+        ARouterIntent.toWebActivity(bean)
     }
 }

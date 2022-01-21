@@ -18,7 +18,7 @@ import com.wangxingxing.wanandroid.ui.home.HomeArticleAdapter
  * email : 1099420259@qq.com
  * description :
  */
-class SquareArticleAdapter(private val context: Context, private val listener: SquareArticleAdapter.IListener) : PagingDataAdapter<HomeArticleBean, BindingViewHolder>(object : DiffUtil.ItemCallback<HomeArticleBean>(){
+class SquareArticleAdapter(private val context: Context, private val listener: IListener) : PagingDataAdapter<HomeArticleBean, BindingViewHolder>(object : DiffUtil.ItemCallback<HomeArticleBean>(){
     override fun areItemsTheSame(oldItem: HomeArticleBean, newItem: HomeArticleBean): Boolean {
         return oldItem.id == newItem.id
     }
@@ -36,7 +36,6 @@ class SquareArticleAdapter(private val context: Context, private val listener: S
         getItem(position)?.let { bean ->
             val binding = holder.binding as ItemHomeArticleBinding
 
-            binding.tvTop.visibility = View.VISIBLE
             holder.binding.tvNew.isVisible = bean.fresh
 //            bean.tags.forEach {
 //                holder.binding.tvSitePostings.isVisible =

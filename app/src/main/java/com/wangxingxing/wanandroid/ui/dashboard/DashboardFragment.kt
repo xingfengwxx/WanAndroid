@@ -7,6 +7,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
+import com.wangxingxing.wanandroid.ARouterIntent
 import com.wangxingxing.wanandroid.Constants
 import com.wangxingxing.wanandroid.base.BaseFragment
 import com.wangxingxing.wanandroid.databinding.FragmentDashboardBinding
@@ -51,10 +52,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(), SquareArticl
 
     override fun onItemClick(view: View, position: Int) {
         val bean = mAdapter.snapshot().items[position]
-        ARouter.getInstance()
-            .build(Constants.PATH_WEB)
-            .withString("url", bean.link)
-            .navigation()
+        ARouterIntent.toWebActivity(bean)
     }
 
 
