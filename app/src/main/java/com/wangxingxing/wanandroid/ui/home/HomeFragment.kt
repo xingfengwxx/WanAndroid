@@ -81,7 +81,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeArticleAdapter.ILi
         binding.banner.setOnBannerListener { data, position ->
             ARouter.getInstance()
                 .build(Constants.PATH_WEB)
-                .withString("url", (data as BannerBean).url)
+                .withString(Constants.KEY_URL, (data as BannerBean).url)
+                .withString(Constants.KEY_TITLE, (data as BannerBean).title)
                 .navigation()
         }
     }

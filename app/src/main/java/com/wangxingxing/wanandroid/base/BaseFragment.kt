@@ -38,12 +38,14 @@ open abstract class BaseFragment<T : ViewBinding> : Fragment(), LifecycleObserve
             Boolean::class.java
         )
             .invoke(null, LayoutInflater.from(requireActivity()), container, false) as T
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView()
         initData()
         initObserver()
-
-        return binding.root
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -56,7 +58,6 @@ open abstract class BaseFragment<T : ViewBinding> : Fragment(), LifecycleObserve
         super.onAttach(context)
         activity?.lifecycle?.addObserver(this)
     }
-
 
     abstract fun initView()
     abstract fun initData()

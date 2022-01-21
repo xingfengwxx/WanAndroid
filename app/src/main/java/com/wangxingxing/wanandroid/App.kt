@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.orhanobut.logger.AndroidLogAdapter
@@ -94,10 +95,11 @@ open class App : Application() {
             LogUtils.e("${Thread.currentThread().name} 捕获到异常：$e")
             e.printStackTrace()
 
-//            if (Looper.getMainLooper() == Looper.myLooper()) {
+            if (Looper.getMainLooper() == Looper.myLooper()) {
 //                Process.killProcess(Process.myPid())
 //                exitProcess(10)
-//            }
+                AppUtils.exitApp()
+            }
         }
     }
 
