@@ -47,6 +47,7 @@ class WeChatArticleFragment : BaseFragment<FragmentWeChatArticleBinding>() {
     override fun initObserver() {
         viewModel.articleLiveData.observe(this) {
             mAdapter.loadMoreModule.isEnableLoadMore = true
+            binding.swiperRefresh.isRefreshing = false
             if (mPageNum == 1) {
                 mAdapter.setNewInstance(it.data.datas as MutableList<HomeArticleBean>)
             } else {
@@ -67,6 +68,12 @@ class WeChatArticleFragment : BaseFragment<FragmentWeChatArticleBinding>() {
 
         mAdapter.loadMoreModule.setOnLoadMoreListener {
             mPageNum++
+            viewModel.getWeChatArticleList(accountId!!, mPageNum)
+        }
+
+        binding.swiperRefresh.setOnRefreshListener {
+            binding.swiperRefresh.isRefreshing = true
+            mPageNum = 1
             viewModel.getWeChatArticleList(accountId!!, mPageNum)
         }
     }
