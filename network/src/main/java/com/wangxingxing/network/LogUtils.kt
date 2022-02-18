@@ -47,37 +47,38 @@ object LogUtils {
         log(E, tag, msg)
     }
 
-    private fun log(type: Int, tag: String?, msg: String?) {
-        var msg = msg
-        if (tag == null || tag.isEmpty() || msg == null || msg.isEmpty()) return
-        val length = msg.length.toLong()
-        if (length <= SEGMENT_SIZE) { // 长度小于等于限制直接打印
-            when (type) {
-                V -> Log.v(tag, msg)
-                D -> Log.d(tag, msg)
-                I -> Log.i(tag, msg)
-                W -> Log.w(tag, msg)
-                E -> Log.e(tag, msg)
-            }
-        } else {
-            while (msg!!.length > SEGMENT_SIZE) { // 循环分段打印日志
-                val logContent = msg.substring(0, SEGMENT_SIZE)
-                msg = msg.replace(logContent, "")
-                when (type) {
-                    V -> Log.v(tag, logContent)
-                    D -> Log.d(tag, logContent)
-                    I -> Log.i(tag, logContent)
-                    W -> Log.w(tag, logContent)
-                    E -> Log.e(tag, logContent)
+    private fun log(@TYPE type: Int, tag: String?, msg: String?, tr: Throwable? = null) {
+        //因为String的length是字符数量不是字节数量所以为了防止中文字符过多，
+        // 把4*1024的MAX字节打印长度改为2001字符数
+        val maxStrLength = 2001 - tag?.length!!
+        //大于4000时
+        var str = msg
+        while (str?.length!! > maxStrLength) {
+            realLog(type, tag, str?.substring(0, maxStrLength), tr)
+            str = str.substring(maxStrLength)
+        }
+        //剩余部分
+        realLog(type, tag, str, tr)
+    }
+
+    private fun realLog(@TYPE type: Int, tag: String?, msg: String?, tr: Throwable? = null) {
+        when (type) {
+            V -> Log.v(tag, msg.toString())
+            D -> Log.d(tag, msg.toString())
+            I -> Log.i(tag, msg.toString())
+            W -> {
+                if (tr == null) {
+                    Log.w(tag, msg.toString())
+                } else {
+                    Log.w(tag, msg.toString(), tr)
                 }
             }
-            // 打印剩余日志
-            when (type) {
-                V -> Log.v(tag, msg)
-                D -> Log.d(tag, msg)
-                I -> Log.i(tag, msg)
-                W -> Log.w(tag, msg)
-                E -> Log.e(tag, msg)
+            E -> {
+                if (tr == null) {
+                    Log.e(tag, msg.toString())
+                } else {
+                    Log.e(tag, msg.toString(), tr)
+                }
             }
         }
     }
